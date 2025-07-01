@@ -96,6 +96,8 @@
       border-radius: 8px;
       width: 90%;
       max-width: 500px;
+      box-sizing: border-box;
+      text-align: left;
     }
 
     .modal-content h2 {
@@ -118,6 +120,7 @@
       border: 1px solid #555;
       background: #111;
       color: #fff;
+      box-sizing: border-box;
     }
 
     .modal-buttons {
@@ -174,6 +177,13 @@
   <div id="modal" class="modal">
     <div class="modal-content">
       <h2>Denúncia Interna</h2>
+
+      <label>Meu ID:</label>
+      <input type="text" id="meuId" maxlength="10" oninput="this.value = this.value.replace(/\D/g, '')">
+
+      <label>Meu Discord:</label>
+      <input type="text" id="meuDiscord">
+
       <label>ID do membro:</label>
       <input type="text" id="denunciaId" maxlength="10" oninput="this.value = this.value.replace(/\D/g, '')">
 
@@ -200,16 +210,22 @@
     }
 
     function enviarDenuncia() {
+      const meuId = document.getElementById("meuId").value.trim();
+      const meuDiscord = document.getElementById("meuDiscord").value.trim();
       const id = document.getElementById("denunciaId").value.trim();
       const motivo = document.getElementById("denunciaMotivo").value.trim();
       const prova = document.getElementById("denunciaProva").value.trim();
 
-      if (!id || !motivo || !prova) {
-        alert("⚠️ Preencha todos os campos da denúncia.");
+      if (!meuId || !meuDiscord || !id || !motivo || !prova) {
+        alert("⚠️ Preencha todos os campos.");
         return;
       }
 
       const mensagem = `🚨 **NOVA DENÚNCIA INTERNA**\n\n` +
+        `👤 **Denunciante**\n` +
+        `🆔 Meu ID: ${meuId}\n` +
+        `🎮 Meu Discord: ${meuDiscord}\n\n` +
+        `👤 **Denunciado**\n` +
         `🆔 ID: ${id}\n` +
         `📄 Motivo: ${motivo}\n` +
         `📎 Prova: ${prova}\n\n` +
@@ -226,6 +242,8 @@
         if (res.ok) {
           alert("✅ Sua denúncia foi enviada com sucesso!");
           fecharModal();
+          document.getElementById("meuId").value = "";
+          document.getElementById("meuDiscord").value = "";
           document.getElementById("denunciaId").value = "";
           document.getElementById("denunciaMotivo").value = "";
           document.getElementById("denunciaProva").value = "";
