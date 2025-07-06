@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tropa do Japão</title>
   <style>
+    /* (todo o estilo permanece igual ao que você enviou) */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -17,7 +18,6 @@
       align-items: center;
       min-height: 100vh;
     }
-
     body::before {
       content: "";
       position: absolute;
@@ -28,20 +28,17 @@
       background: rgba(0, 0, 0, 0.7);
       z-index: -1;
     }
-
     header {
       background-color: rgba(0, 0, 0, 0.8);
       padding: 20px;
       text-align: center;
       width: 100%;
     }
-
     header h1 {
       margin: 0;
       font-size: 2.5em;
       color: #ff4500;
     }
-
     main {
       flex: 1;
       padding: 20px;
@@ -50,7 +47,6 @@
       align-items: center;
       width: 100%;
     }
-
     .form-wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -59,7 +55,6 @@
       width: 100%;
       max-width: 1220px;
     }
-
     .section {
       background: rgba(0, 0, 0, 0.85);
       border-radius: 8px;
@@ -70,17 +65,14 @@
       text-align: center;
       box-sizing: border-box;
     }
-
     .porcentagem {
       max-width: 300px;
       flex: 1;
     }
-
     .section h2 {
       margin-top: 0;
       color: #ff4500;
     }
-
     label {
       display: flex;
       justify-content: space-between;
@@ -88,7 +80,6 @@
       margin: 10px 0;
       font-size: 1.1em;
     }
-
     input[type="number"],
     input[type="text"] {
       width: 80%;
@@ -99,7 +90,6 @@
       color: #fff;
       text-align: left;
     }
-
     .btn {
       background-color: #ff4500;
       border: none;
@@ -112,18 +102,15 @@
       transition: background-color 0.3s;
       margin-top: 15px;
     }
-
     .btn:hover {
       background-color: #e03d00;
     }
-
     .price-btns {
       display: flex;
       justify-content: center;
       gap: 10px;
       margin-bottom: 15px;
     }
-
     .price-btn {
       background-color: #333;
       border: 2px solid #ff4500;
@@ -135,12 +122,10 @@
       transition: all 0.3s;
       flex: 1;
     }
-
     .price-btn.selected {
       background-color: #ff4500;
       color: #fff;
     }
-
     .result-box {
       background: #444;
       border-radius: 5px;
@@ -148,7 +133,6 @@
       margin-top: 15px;
       text-align: left;
     }
-
     footer {
       background: rgba(0, 0, 0, 0.7);
       text-align: center;
@@ -186,7 +170,7 @@
         </div>
 
         <button class="btn" onclick="calcular()">Calcular</button>
-        <button class="btn" onclick="encomendar()">🛒 ENCOMENDAR</button>
+        <button class="btn" id="btn-encomendar" onclick="encomendar()">🛒 ENCOMENDAR</button>
 
         <div id="resultado" class="result-box"></div>
       </div>
@@ -326,6 +310,8 @@
 
       const webhookUrl = "https://discord.com/api/webhooks/1358967231106519182/64TTt6w72aus20JHEAyq6MeNYq5D5jThuMvV6VxqmtLhBmqVUQUEj-ilZmlgGkfpr7K5";
 
+      const botao = document.getElementById("btn-encomendar");
+
       fetch(webhookUrl, {
         method: "POST",
         headers: {
@@ -336,6 +322,12 @@
       .then(res => {
         if (res.ok) {
           alert("✅ Encomenda enviada com sucesso!");
+          botao.disabled = true;
+          botao.textContent = "Aguarde 5 minutos...";
+          setTimeout(() => {
+            botao.disabled = false;
+            botao.textContent = "🛒 ENCOMENDAR";
+          }, 300000);
         } else {
           alert("❌ Erro ao enviar encomenda.");
         }
