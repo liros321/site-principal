@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tropa do Japão</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://i.ibb.co/SwPRnbXN/Chat-GPT-Image-26-de-jun-de-2025-12-49-10.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #ff4500;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .form-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      width: 100%;
+      max-width: 1220px;
+    }
+
+    .section {
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .porcentagem {
+      max-width: 300px;
+      flex: 1;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #ff4500;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 80%;
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      background: #222;
+      color: #fff;
+      text-align: left;
+    }
+
+    .btn {
+      background-color: #ff4500;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-color: #e03d00;
+    }
+
+    .price-btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .price-btn {
+      background-color: #333;
+      border: 2px solid #ff4500;
+      color: #ff4500;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      flex: 1;
+    }
+
+    .price-btn.selected {
+      background-color: #ff4500;
+      color: #fff;
+    }
+
+    .result-box {
+      background: #444;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 15px;
+      text-align: left;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      text-align: center;
+      padding: 10px;
+      color: #ccc;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tropa do Japão</h1>
+  </header>
+  <main>
+    <div class="form-wrapper">
+      <div class="section">
+        <h2>Dados do Comprador</h2>
+        <label>Nome: <input type="text" id="nomeComprador" placeholder="Ex: João Bala" required></label>
+        <label>RG: <input type="text" id="rgComprador" placeholder="Somente números" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')" required></label>
+        <label>Telefone: <input type="text" id="telComprador" placeholder="123-456" maxlength="7" oninput="mascararTelefone(this)" required></label>
+        <label>Discord: <input type="text" id="discordComprador" placeholder="Ex: bala123" required></label>
+
+        <h2>Armas</h2>
+        <label>AK-47 <input type="number" class="item" data-tipo="arma" data-nome="AK-47"></label>
+        <label>PDW <input type="number" class="item" data-tipo="arma" data-nome="PDW"></label>
+        <label>UZI <input type="number" class="item" data-tipo="arma" data-nome="UZI"></label>
+        <label>Five-Seven <input type="number" class="item" data-tipo="arma" data-nome="Five-Seven"></label>
+        <h3>Munições</h3>
+        <label>7.62 <input type="number" class="item" data-tipo="municao" data-nome="7.62"></label>
+        <label>.380 <input type="number" class="item" data-tipo="municao" data-nome=".380"></label>
+
+        <div class="price-btns">
+          <button class="price-btn selected" onclick="selecionarPreco(this, 'padrao')">Preço Padrão</button>
+          <button class="price-btn" onclick="selecionarPreco(this, 'parceria')">Preço Parceria</button>
+        </div>
+
+        <button class="btn" onclick="calcular()">Calcular</button>
+        <button class="btn" onclick="encomendar()">🛒 ENCOMENDAR</button>
+
+        <div id="resultado" class="result-box"></div>
+      </div>
+
+      <div class="section porcentagem">
+        <h2>Calculadora de Porcentagem</h2>
+        <label>Valor Total: <input type="number" id="valorTotal" placeholder="Ex: 10000"></label>
+        <label>Porcentagem (%): <input type="number" id="porcentagem" placeholder="Ex: 30"></label>
+        <button class="btn" onclick="calcularPorcentagem()">Calcular Porcentagem</button>
+        <div id="resultadoPorcentagem" class="result-box"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Tropa do Japão. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    let tipoPreco = "padrao";
+
+    function selecionarPreco(botao, tipo) {
+      tipoPreco = tipo;
+      document.querySelectorAll('.price-btn').forEach(btn => btn.classList.remove('selected'));
+      botao.classList.add('selected');
+      calcular();
+    }
+
+    const precos = {
+      'AK-47': { padrao: 150000, parceria: 130000 },
+      'PDW': { padrao: 110000, parceria: 100000 },
+      'UZI': { padrao: 85000, parceria: 80000 },
+      'Five-Seven': { padrao: 45000, parceria: 40000 },
+      '7.62': { padrao: 500, parceria: 400 },
+      '.380': { padrao: 450, parceria: 350 }
+    };
+
+    const materiaisPorItem = {
+      'AK-47': { ferro: 5, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
+      'PDW': { ferro: 3, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
+      'UZI': { ferro: 2, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
+      'Five-Seven': { ferro: 1, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
+      '7.62': { cobre: 3, prata: 3, polvora: 3 },
+      '.380': { cobre: 2, prata: 2, polvora: 2 }
+    };
+
+    function calcular() {
+      let resultado = "<h3>Materiais Necessários:</h3><ul>";
+      let totalVenda = 0;
+      let totalMateriais = {};
+
+      document.querySelectorAll(".item").forEach(input => {
+        let nome = input.dataset.nome;
+        let quantidade = parseInt(input.value) || 0;
+        let fator = (nome === "7.62" || nome === ".380") ? Math.ceil(quantidade / 84) : quantidade;
+
+        if (quantidade > 0) {
+          totalVenda += quantidade * precos[nome][tipoPreco];
+          for (let material in materiaisPorItem[nome]) {
+            totalMateriais[material] = (totalMateriais[material] || 0) + materiaisPorItem[nome][material] * fator;
+          }
+        }
+      });
+
+      for (let material in totalMateriais) {
+        resultado += `<li>${totalMateriais[material]}x ${material}</li>`;
+      }
+
+      resultado += `</ul><h3>Valor Total de Venda: R$ ${totalVenda.toLocaleString()}</h3>`;
+      document.getElementById("resultado").innerHTML = resultado;
+    }
+
+    function calcularPorcentagem() {
+      const valor = parseFloat(document.getElementById("valorTotal").value);
+      const percentual = parseFloat(document.getElementById("porcentagem").value);
+
+      if (isNaN(valor) || isNaN(percentual)) {
+        document.getElementById("resultadoPorcentagem").innerHTML = "<p>⚠️ Preencha os dois campos corretamente.</p>";
+        return;
+      }
+
+      const desconto = (valor * percentual / 100);
+      const resultado = (valor - desconto).toFixed(2);
+
+      document.getElementById("resultadoPorcentagem").innerHTML = `
+        <p>${percentual}% de desconto sobre R$ ${valor.toLocaleString()} resulta em <strong>R$ ${parseFloat(resultado).toLocaleString()}</strong></p>
+      `;
+    }
+
+    function mascararTelefone(input) {
+      let valor = input.value.replace(/\D/g, '').substring(0, 6);
+      if (valor.length >= 4) {
+        input.value = valor.substring(0, 3) + '-' + valor.substring(3);
+      } else {
+        input.value = valor;
+      }
+    }
+
+    function encomendar() {
+      const nome = document.getElementById("nomeComprador").value.trim();
+      const discord = document.getElementById("discordComprador").value.trim();
+      const rg = document.getElementById("rgComprador").value.trim();
+      const tel = document.getElementById("telComprador").value.trim();
+
+      if (!nome || !discord || !rg || !tel) {
+        alert("⚠️ Preencha todos os dados do comprador.");
+        return;
+      }
+      if (!/^\d+$/.test(rg)) {
+        alert("⚠️ O RG deve conter apenas números.");
+        return;
+      }
+
+      const itens = document.querySelectorAll(".item");
+      let mensagem = `**📦 NOVA ENCOMENDA – TROPA DO JAPÃO**\n👤 Comprador: ${nome}\n🪪 RG: ${rg}\n📱 Telefone: ${tel}\n🕹️ Discord: ${discord}\n\n`;
+      let totalVenda = 0;
+      let houvePedido = false;
+
+      itens.forEach(input => {
+        const nome = input.dataset.nome;
+        const quantidade = parseInt(input.value) || 0;
+        if (quantidade > 0) {
+          const preco = precos[nome][tipoPreco];
+          const valorTotalItem = quantidade * preco;
+          mensagem += `🔫 ${nome}: ${quantidade}x (R$ ${valorTotalItem.toLocaleString()})\n`;
+          totalVenda += valorTotalItem;
+          houvePedido = true;
+        }
+      });
+
+      if (!houvePedido) {
+        alert("⚠️ Preencha pelo menos um item antes de encomendar.");
+        return;
+      }
+
+      mensagem += `\n💰 Total: R$ ${totalVenda.toLocaleString()}\n📦 Tipo de preço: ${tipoPreco.toUpperCase()}`;
+
+      const webhookUrl = "https://discord.com/api/webhooks/1358967231106519182/64TTt6w72aus20JHEAyq6MeNYq5D5jThuMvV6VxqmtLhBmqVUQUEj-ilZmlgGkfpr7K5";
+
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ content: mensagem })
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("✅ Encomenda enviada com sucesso!");
+        } else {
+          alert("❌ Erro ao enviar encomenda.");
+        }
+      })
+      .catch(err => {
+        alert("❌ Falha ao conectar com o Discord: " + err.message);
+      });
+    }
+  </script>
+</body>
+</html>
