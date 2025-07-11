@@ -175,7 +175,6 @@
 
       const dataRegex = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/;
       const match = entrevista.match(dataRegex);
-
       if (!match) {
         alert("⚠️ Data e hora inválidas. Use o formato: DD/MM/AAAA HH:MM");
         return;
@@ -191,32 +190,47 @@
         return;
       }
 
-      const mensagem = `📋 **NOVA INSCRIÇÃO DE RECRUTAMENTO**\n\n` +
-        `🕹️ Discord: ${discord}\n` +
-        `👤 Nome: ${nome}\n` +
-        `🪪 RG: ${rg}\n` +
-        `📱 Telefone: ${telefone}\n` +
-        `🎂 Idade: ${idade}\n` +
-        `🎖️ Nível do Personagem: ${nivel}/100\n` +
-        `⏳ Tempo na Cidade: ${tempo}\n` +
-        `🗓️ Data e Hora para Entrevista: ${entrevista}\n\n` +
-        `<@&796350502588776478>`;
-
       const webhookUrl = "https://discord.com/api/webhooks/1390950614653210724/Ttbw5Wdex7inpKMtutO-BwgxmKyTxfyOO66as89nxWXFvKzOv-1zilF5GWAeBrbfQpjK";
+
+      const embed = {
+        embeds: [
+          {
+            title: "📋 NOVA INSCRIÇÃO DE RECRUTAMENTO",
+            thumbnail: {
+              url: "https://i.ibb.co/215KsHzd/a-1f4f6d293574384b5442fe75cd5cdd6e.gif"
+            },
+            color: 16729344,
+            fields: [
+              { name: "🕹️ Discord", value: discord, inline: false },
+              { name: "👤 Nome", value: nome, inline: true },
+              { name: "🪪 RG", value: rg, inline: true },
+              { name: "📱 Telefone", value: telefone, inline: true },
+              { name: "🎂 Idade", value: idade, inline: true },
+              { name: "🎖️ Nível do Personagem", value: `${nivel}/100`, inline: true },
+              { name: "⏳ Tempo na Cidade", value: tempo, inline: true },
+              { name: "🗓️ Data/Hora Entrevista", value: entrevista, inline: true }
+            ],
+            footer: {
+              text: `Solicitante: ${nome}`
+            }
+          }
+        ],
+        content: "<@&796350502588776478>"
+      };
+
+      const botao = document.getElementById("botaoEnviar");
+      botao.disabled = true;
+      botao.innerText = "✅ SOLICITAÇÃO ENVIADA";
 
       fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: mensagem })
+        body: JSON.stringify(embed)
       })
       .then(res => {
         if (res.ok) {
           document.getElementById("confirmacao").innerHTML =
-            "✅ Recrutamento enviado! Em breve um de nossos recrutadores irá entrar em contato via Discord ou Telefone para confirmar sua entrevista, <strong>FIQUE ATENTO!!!!</strong>";
-
-          const botao = document.getElementById("botaoEnviar");
-          botao.disabled = true;
-          botao.innerText = "Você já solicitou o recrutamento";
+            "✅ Recrutamento enviado com sucesso! Em breve entraremos em contato via Discord ou Telefone.";
 
           setTimeout(() => {
             botao.disabled = false;
@@ -224,10 +238,14 @@
           }, 300000);
         } else {
           alert("❌ Erro ao enviar recrutamento.");
+          botao.disabled = false;
+          botao.innerText = "Enviar Recrutamento";
         }
       })
       .catch(err => {
         alert("❌ Erro de conexão com o Discord: " + err.message);
+        botao.disabled = false;
+        botao.innerText = "Enviar Recrutamento";
       });
     }
   </script>
