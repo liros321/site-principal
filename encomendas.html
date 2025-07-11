@@ -301,8 +301,16 @@
         alert("⚠️ Preencha pelo menos um item antes de encomendar.");
         return;
       }
+
+      // Adicionando dados do comprador
+      fields.push({ name: '📛 Nome', value: nome, inline: true });
+      fields.push({ name: '🪪 RG', value: rg, inline: true });
+      fields.push({ name: '📞 Telefone', value: tel, inline: true });
+      fields.push({ name: '🕹️ Discord', value: discord, inline: true });
+
       fields.push({ name: '💰 Total', value: `R$ ${totalVenda.toLocaleString()}` });
       fields.push({ name: '📦 Tipo de Preço', value: tipoPreco.toUpperCase() });
+
       const embed = {
         title: '📦 NOVA ENCOMENDA – TROPA DO JAPÃO',
         thumbnail: {
