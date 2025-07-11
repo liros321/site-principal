@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tropa do Japão</title>
   <style>
-    /* (todo o estilo permanece igual ao que você enviou) */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -133,6 +132,12 @@
       margin-top: 15px;
       text-align: left;
     }
+    #mensagem-confirmacao {
+      margin-top: 15px;
+      color: #00ff88;
+      font-size: 1.1em;
+      display: none;
+    }
     footer {
       background: rgba(0, 0, 0, 0.7);
       text-align: center;
@@ -173,6 +178,7 @@
         <button class="btn" id="btn-encomendar" onclick="encomendar()">🛒 ENCOMENDAR</button>
 
         <div id="resultado" class="result-box"></div>
+        <div id="mensagem-confirmacao">Sua encomenda foi solicitada, fique atento ao telefone e discord, entraremos em contato.</div>
       </div>
 
       <div class="section porcentagem">
@@ -184,21 +190,11 @@
       </div>
     </div>
   </main>
-
   <footer>
     <p>&copy; 2025 Tropa do Japão. Todos os direitos reservados.</p>
   </footer>
-
   <script>
     let tipoPreco = "padrao";
-
-    function selecionarPreco(botao, tipo) {
-      tipoPreco = tipo;
-      document.querySelectorAll('.price-btn').forEach(btn => btn.classList.remove('selected'));
-      botao.classList.add('selected');
-      calcular();
-    }
-
     const precos = {
       'AK-47': { padrao: 150000, parceria: 130000 },
       'PDW': { padrao: 110000, parceria: 100000 },
@@ -207,7 +203,6 @@
       '7.62': { padrao: 500, parceria: 400 },
       '.380': { padrao: 450, parceria: 350 }
     };
-
     const materiaisPorItem = {
       'AK-47': { ferro: 5, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
       'PDW': { ferro: 3, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
@@ -216,17 +211,20 @@
       '7.62': { cobre: 3, prata: 3, polvora: 3 },
       '.380': { cobre: 2, prata: 2, polvora: 2 }
     };
-
+    function selecionarPreco(botao, tipo) {
+      tipoPreco = tipo;
+      document.querySelectorAll('.price-btn').forEach(btn => btn.classList.remove('selected'));
+      botao.classList.add('selected');
+      calcular();
+    }
     function calcular() {
       let resultado = "<h3>Materiais Necessários:</h3><ul>";
       let totalVenda = 0;
       let totalMateriais = {};
-
       document.querySelectorAll(".item").forEach(input => {
         let nome = input.dataset.nome;
         let quantidade = parseInt(input.value) || 0;
         let fator = (nome === "7.62" || nome === ".380") ? Math.ceil(quantidade / 84) : quantidade;
-
         if (quantidade > 0) {
           totalVenda += quantidade * precos[nome][tipoPreco];
           for (let material in materiaisPorItem[nome]) {
@@ -234,32 +232,24 @@
           }
         }
       });
-
       for (let material in totalMateriais) {
         resultado += `<li>${totalMateriais[material]}x ${material}</li>`;
       }
-
       resultado += `</ul><h3>Valor Total de Venda: R$ ${totalVenda.toLocaleString()}</h3>`;
       document.getElementById("resultado").innerHTML = resultado;
     }
-
     function calcularPorcentagem() {
       const valor = parseFloat(document.getElementById("valorTotal").value);
       const percentual = parseFloat(document.getElementById("porcentagem").value);
-
       if (isNaN(valor) || isNaN(percentual)) {
         document.getElementById("resultadoPorcentagem").innerHTML = "<p>⚠️ Preencha os dois campos corretamente.</p>";
         return;
       }
-
       const desconto = (valor * percentual / 100);
       const resultado = (valor - desconto).toFixed(2);
-
-      document.getElementById("resultadoPorcentagem").innerHTML = `
-        <p>${percentual}% de desconto sobre R$ ${valor.toLocaleString()} resulta em <strong>R$ ${parseFloat(resultado).toLocaleString()}</strong></p>
-      `;
+      document.getElementById("resultadoPorcentagem").innerHTML =
+        `<p>${percentual}% de desconto sobre R$ ${valor.toLocaleString()} resulta em <strong>R$ ${parseFloat(resultado).toLocaleString()}</strong></p>`;
     }
-
     function mascararTelefone(input) {
       let valor = input.value.replace(/\D/g, '').substring(0, 6);
       if (valor.length >= 4) {
@@ -268,66 +258,74 @@
         input.value = valor;
       }
     }
-
+    function bloquearBotao() {
+      const botao = document.getElementById("btn-encomendar");
+      botao.disabled = true;
+      botao.textContent = "✅ ENCOMENDA SOLICITADA";
+      document.getElementById("mensagem-confirmacao").style.display = "block";
+      setTimeout(() => {
+        botao.disabled = false;
+        botao.textContent = "🛒 ENCOMENDAR";
+        document.getElementById("mensagem-confirmacao").style.display = "none";
+      }, 300000);
+    }
     function encomendar() {
       const nome = document.getElementById("nomeComprador").value.trim();
       const discord = document.getElementById("discordComprador").value.trim();
       const rg = document.getElementById("rgComprador").value.trim();
       const tel = document.getElementById("telComprador").value.trim();
-
       if (!nome || !discord || !rg || !tel) {
         alert("⚠️ Preencha todos os dados do comprador.");
         return;
       }
-      if (!/^\d+$/.test(rg)) {
-        alert("⚠️ O RG deve conter apenas números.");
-        return;
-      }
-
       const itens = document.querySelectorAll(".item");
-      let mensagem = `**📦 NOVA ENCOMENDA – TROPA DO JAPÃO**\n👤 Comprador: ${nome}\n🪪 RG: ${rg}\n📱 Telefone: ${tel}\n🕹️ Discord: ${discord}\n\n`;
+      let fields = [];
       let totalVenda = 0;
       let houvePedido = false;
-
       itens.forEach(input => {
-        const nome = input.dataset.nome;
+        const nomeItem = input.dataset.nome;
         const quantidade = parseInt(input.value) || 0;
         if (quantidade > 0) {
-          const preco = precos[nome][tipoPreco];
+          const preco = precos[nomeItem][tipoPreco];
           const valorTotalItem = quantidade * preco;
-          mensagem += `🔫 ${nome}: ${quantidade}x (R$ ${valorTotalItem.toLocaleString()})\n`;
+          fields.push({
+            name: `🔫 ${nomeItem}`,
+            value: `${quantidade}x (R$ ${valorTotalItem.toLocaleString()})`,
+            inline: true
+          });
           totalVenda += valorTotalItem;
           houvePedido = true;
         }
       });
-
       if (!houvePedido) {
         alert("⚠️ Preencha pelo menos um item antes de encomendar.");
         return;
       }
-
-      mensagem += `\n💰 Total: R$ ${totalVenda.toLocaleString()}\n📦 Tipo de preço: ${tipoPreco.toUpperCase()}`;
-
+      fields.push({ name: '💰 Total', value: `R$ ${totalVenda.toLocaleString()}` });
+      fields.push({ name: '📦 Tipo de Preço', value: tipoPreco.toUpperCase() });
+      const embed = {
+        title: '📦 NOVA ENCOMENDA – TROPA DO JAPÃO',
+        thumbnail: {
+          url: 'https://i.ibb.co/215KsHzd/a-1f4f6d293574384b5442fe75cd5cdd6e.gif'
+        },
+        color: 0xff4500,
+        fields: fields,
+        footer: {
+          text: `Solicitante: ${nome}`
+        },
+        timestamp: new Date()
+      };
       const webhookUrl = "https://discord.com/api/webhooks/1358967231106519182/64TTt6w72aus20JHEAyq6MeNYq5D5jThuMvV6VxqmtLhBmqVUQUEj-ilZmlgGkfpr7K5";
-
-      const botao = document.getElementById("btn-encomendar");
-
       fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ content: mensagem })
+        body: JSON.stringify({ embeds: [embed] })
       })
       .then(res => {
         if (res.ok) {
-          alert("✅ Encomenda enviada com sucesso!");
-          botao.disabled = true;
-          botao.textContent = "Aguarde 5 minutos...";
-          setTimeout(() => {
-            botao.disabled = false;
-            botao.textContent = "🛒 ENCOMENDAR";
-          }, 300000);
+          bloquearBotao();
         } else {
           alert("❌ Erro ao enviar encomenda.");
         }
