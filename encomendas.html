@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tropa do Japão - Encomendas</title>
+  <title>Tropa do Japão</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -27,15 +27,24 @@
       background: rgba(0, 0, 0, 0.7);
       z-index: -1;
     }
-    header, footer {
+    header {
       background-color: rgba(0, 0, 0, 0.8);
-      width: 100%;
+      padding: 20px;
       text-align: center;
-      padding: 15px;
+      width: 100%;
     }
     header h1 {
-      color: #ff4500;
       margin: 0;
+      font-size: 2.5em;
+      color: #ff4500;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
     .form-wrapper {
       display: flex;
@@ -44,42 +53,52 @@
       justify-content: center;
       width: 100%;
       max-width: 1220px;
-      padding: 20px;
     }
     .section {
       background: rgba(0, 0, 0, 0.85);
       border-radius: 8px;
       padding: 20px;
+      margin-bottom: 20px;
       width: 100%;
       max-width: 600px;
       text-align: center;
+      box-sizing: border-box;
+    }
+    .porcentagem {
+      max-width: 300px;
+      flex: 1;
     }
     .section h2 {
+      margin-top: 0;
       color: #ff4500;
     }
     label {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin: 10px 0;
       font-size: 1.1em;
     }
-    input[type="text"], input[type="number"] {
-      width: 65%;
+    input[type="number"],
+    input[type="text"] {
+      width: 80%;
       padding: 5px;
       border-radius: 4px;
       border: 1px solid #555;
       background: #222;
       color: #fff;
+      text-align: left;
     }
     .btn {
       background-color: #ff4500;
       border: none;
       color: #fff;
-      padding: 10px;
+      padding: 10px 20px;
       font-size: 1.1em;
       border-radius: 5px;
       cursor: pointer;
       width: 100%;
+      transition: background-color 0.3s;
       margin-top: 15px;
     }
     .btn:hover {
@@ -87,78 +106,95 @@
     }
     .price-btns {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       gap: 10px;
-      margin: 15px 0;
+      margin-bottom: 15px;
     }
     .price-btn {
-      flex: 1;
+      background-color: #333;
       border: 2px solid #ff4500;
-      background: #222;
       color: #ff4500;
+      padding: 10px 20px;
+      font-size: 1em;
       border-radius: 5px;
-      padding: 10px;
       cursor: pointer;
+      transition: all 0.3s;
+      flex: 1;
     }
     .price-btn.selected {
-      background: #ff4500;
-      color: white;
+      background-color: #ff4500;
+      color: #fff;
     }
     .result-box {
       background: #444;
-      padding: 10px;
-      margin-top: 15px;
       border-radius: 5px;
+      padding: 15px;
+      margin-top: 15px;
       text-align: left;
     }
     #mensagem-confirmacao {
-      margin-top: 10px;
+      margin-top: 15px;
       color: #00ff88;
+      font-size: 1.1em;
       display: none;
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      text-align: center;
+      padding: 10px;
+      color: #ccc;
+      width: 100%;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Tropa do Japão - Encomendas</h1>
+    <h1>Tropa do Japão</h1>
   </header>
+  <main>
+    <div class="form-wrapper">
+      <div class="section">
+        <h2>Dados do Comprador</h2>
+        <label>Nome: <input type="text" id="nomeComprador" placeholder="Ex: João Bala" required></label>
+        <label>RG: <input type="text" id="rgComprador" placeholder="Somente números" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')" required></label>
+        <label>Telefone: <input type="text" id="telComprador" placeholder="123-456" maxlength="7" oninput="mascararTelefone(this)" required></label>
+        <label>Discord: <input type="text" id="discordComprador" placeholder="Ex: bala123" required></label>
 
-  <div class="form-wrapper">
-    <div class="section">
-      <h2>Dados do Comprador</h2>
-      <label>Nome: <input type="text" id="nomeComprador" required></label>
-      <label>RG: <input type="text" id="rgComprador" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')" required></label>
-      <label>Telefone: <input type="text" id="telComprador" maxlength="7" oninput="mascararTelefone(this)" required></label>
-      <label>Discord: <input type="text" id="discordComprador" required></label>
+        <h2>Armas</h2>
+        <label>AK-47 <input type="number" class="item" data-tipo="arma" data-nome="AK-47"></label>
+        <label>PDW <input type="number" class="item" data-tipo="arma" data-nome="PDW"></label>
+        <label>UZI <input type="number" class="item" data-tipo="arma" data-nome="UZI"></label>
+        <label>Five-Seven <input type="number" class="item" data-tipo="arma" data-nome="Five-Seven"></label>
+        <h3>Munições</h3>
+        <label>7.62 <input type="number" class="item" data-tipo="municao" data-nome="7.62"></label>
+        <label>.380 <input type="number" class="item" data-tipo="municao" data-nome=".380"></label>
 
-      <h2>Armas</h2>
-      <label>AK-47 <input type="number" class="item" data-nome="AK-47"></label>
-      <label>PDW <input type="number" class="item" data-nome="PDW"></label>
-      <label>UZI <input type="number" class="item" data-nome="UZI"></label>
-      <label>Five-Seven <input type="number" class="item" data-nome="Five-Seven"></label>
+        <div class="price-btns">
+          <button class="price-btn selected" onclick="selecionarPreco(this, 'padrao')">Preço Padrão</button>
+          <button class="price-btn" onclick="selecionarPreco(this, 'parceria')">Preço Parceria</button>
+        </div>
 
-      <h2>Munições</h2>
-      <label>7.62 <input type="number" class="item" data-nome="7.62"></label>
-      <label>.380 <input type="number" class="item" data-nome=".380"></label>
+        <button class="btn" onclick="calcular()">Calcular</button>
+        <button class="btn" id="btn-encomendar" onclick="encomendar()">🛒 ENCOMENDAR</button>
 
-      <div class="price-btns">
-        <button class="price-btn selected" onclick="selecionarPreco(this, 'padrao')">Preço Padrão</button>
-        <button class="price-btn" onclick="selecionarPreco(this, 'parceria')">Preço Parceria</button>
+        <div id="resultado" class="result-box"></div>
+        <div id="mensagem-confirmacao">Sua encomenda foi solicitada, fique atento ao telefone e discord, entraremos em contato.</div>
       </div>
 
-      <button class="btn" onclick="calcular()">Calcular</button>
-      <button class="btn" id="btn-encomendar" onclick="encomendar()">🛒 ENCOMENDAR</button>
-
-      <div id="resultado" class="result-box"></div>
-      <div id="mensagem-confirmacao">✅ Encomenda enviada com sucesso!</div>
+      <div class="section porcentagem">
+        <h2>Calculadora de Porcentagem</h2>
+        <label>Valor Total: <input type="number" id="valorTotal" placeholder="Ex: 10000"></label>
+        <label>Porcentagem (%): <input type="number" id="porcentagem" placeholder="Ex: 30"></label>
+        <button class="btn" onclick="calcularPorcentagem()">Calcular Porcentagem</button>
+        <div id="resultadoPorcentagem" class="result-box"></div>
+      </div>
     </div>
-  </div>
-
+  </main>
   <footer>
-    <p>&copy; 2025 Tropa do Japão</p>
+    <p>&copy; 2025 Tropa do Japão. Todos os direitos reservados.</p>
   </footer>
-
   <script>
+    let tipoPreco = "padrao";
     const precos = {
       'AK-47': { padrao: 150000, parceria: 130000 },
       'PDW': { padrao: 110000, parceria: 100000 },
@@ -167,15 +203,53 @@
       '7.62': { padrao: 500, parceria: 400 },
       '.380': { padrao: 450, parceria: 350 }
     };
-
-    let tipoPreco = "padrao";
-
+    const materiaisPorItem = {
+      'AK-47': { ferro: 5, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
+      'PDW': { ferro: 3, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
+      'UZI': { ferro: 2, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
+      'Five-Seven': { ferro: 1, ferrolho: 1, cano: 1, mola: 1, gatilho: 1 },
+      '7.62': { cobre: 3, prata: 3, polvora: 3 },
+      '.380': { cobre: 2, prata: 2, polvora: 2 }
+    };
     function selecionarPreco(botao, tipo) {
       tipoPreco = tipo;
-      document.querySelectorAll(".price-btn").forEach(btn => btn.classList.remove("selected"));
-      botao.classList.add("selected");
+      document.querySelectorAll('.price-btn').forEach(btn => btn.classList.remove('selected'));
+      botao.classList.add('selected');
+      calcular();
     }
-
+    function calcular() {
+      let resultado = "<h3>Materiais Necessários:</h3><ul>";
+      let totalVenda = 0;
+      let totalMateriais = {};
+      document.querySelectorAll(".item").forEach(input => {
+        let nome = input.dataset.nome;
+        let quantidade = parseInt(input.value) || 0;
+        let fator = (nome === "7.62" || nome === ".380") ? Math.ceil(quantidade / 84) : quantidade;
+        if (quantidade > 0) {
+          totalVenda += quantidade * precos[nome][tipoPreco];
+          for (let material in materiaisPorItem[nome]) {
+            totalMateriais[material] = (totalMateriais[material] || 0) + materiaisPorItem[nome][material] * fator;
+          }
+        }
+      });
+      for (let material in totalMateriais) {
+        resultado += `<li>${totalMateriais[material]}x ${material}</li>`;
+      }
+      resultado += `</ul><h3>Valor Total de Venda: R$ ${totalVenda.toLocaleString()}</h3>`;
+      document.getElementById("resultado").innerHTML = resultado;
+    }
+    function calcularPorcentagem() {
+      const valor = parseFloat(document.getElementById("valorTotal").value);
+      const percentual = parseFloat(document.getElementById("porcentagem").value);
+      if (isNaN(valor) || isNaN(percentual)) {
+        document.getElementById("resultadoPorcentagem").innerHTML = "<p>⚠️ Preencha os dois campos corretamente.</p>";
+        return;
+      }
+      const desconto = (valor * percentual / 100);
+      const resultado = (valor - desconto).toFixed(2);
+      document.getElementById("resultadoPorcentagem").innerHTML =
+        `<p>${percentual}% de desconto sobre R$ ${valor.toLocaleString()} resulta em <strong>R$ ${parseFloat(resultado).toLocaleString()}</strong></p>`;
+    }
     function mascararTelefone(input) {
       let valor = input.value.replace(/\D/g, '').substring(0, 6);
       if (valor.length >= 4) {
@@ -184,83 +258,68 @@
         input.value = valor;
       }
     }
-
-    function calcular() {
-      let total = 0;
-      document.querySelectorAll('.item').forEach(input => {
-        const nome = input.dataset.nome;
-        const qtd = parseInt(input.value) || 0;
-        total += qtd * precos[nome][tipoPreco];
-      });
-      document.getElementById("resultado").innerHTML = `<strong>Total: R$ ${total.toLocaleString()}</strong>`;
-    }
-
     function bloquearBotao() {
-      const btn = document.getElementById("btn-encomendar");
-      btn.disabled = true;
-      btn.innerText = "✅ ENVIADO";
+      const botao = document.getElementById("btn-encomendar");
+      botao.disabled = true;
+      botao.textContent = "✅ ENCOMENDA SOLICITADA";
       document.getElementById("mensagem-confirmacao").style.display = "block";
       setTimeout(() => {
-        btn.disabled = false;
-        btn.innerText = "🛒 ENCOMENDAR";
+        botao.disabled = false;
+        botao.textContent = "🛒 ENCOMENDAR";
         document.getElementById("mensagem-confirmacao").style.display = "none";
       }, 300000);
     }
-
     function encomendar() {
       const nome = document.getElementById("nomeComprador").value.trim();
+      const discord = document.getElementById("discordComprador").value.trim();
       const rg = document.getElementById("rgComprador").value.trim();
       const tel = document.getElementById("telComprador").value.trim();
-      const discord = document.getElementById("discordComprador").value.trim();
-
-      if (!nome || !rg || !tel || !discord) {
-        alert("⚠️ Preencha todos os campos do comprador!");
+      if (!nome || !discord || !rg || !tel) {
+        alert("⚠️ Preencha todos os dados do comprador.");
         return;
       }
-
-      const fields = [];
-      let total = 0;
+      const itens = document.querySelectorAll(".item");
+      let fields = [];
+      let totalVenda = 0;
       let houvePedido = false;
-
-      document.querySelectorAll('.item').forEach(input => {
+      itens.forEach(input => {
         const nomeItem = input.dataset.nome;
-        const qtd = parseInt(input.value) || 0;
-        if (qtd > 0) {
-          const valor = qtd * precos[nomeItem][tipoPreco];
-          fields.push({ name: `🔫 ${nomeItem}`, value: `${qtd}x (R$ ${valor.toLocaleString()})`, inline: true });
-          total += valor;
+        const quantidade = parseInt(input.value) || 0;
+        if (quantidade > 0) {
+          const preco = precos[nomeItem][tipoPreco];
+          const valorTotalItem = quantidade * preco;
+          fields.push({
+            name: `🔫 ${nomeItem}`,
+            value: `${quantidade}x (R$ ${valorTotalItem.toLocaleString()})`,
+            inline: true
+          });
+          totalVenda += valorTotalItem;
           houvePedido = true;
         }
       });
-
       if (!houvePedido) {
-        alert("⚠️ Adicione pelo menos um item à encomenda!");
+        alert("⚠️ Preencha pelo menos um item antes de encomendar.");
         return;
       }
-
-      // Dados do cliente
       fields.push({ name: '📛 Nome', value: nome, inline: true });
       fields.push({ name: '🪪 RG', value: rg, inline: true });
       fields.push({ name: '📞 Telefone', value: tel, inline: true });
       fields.push({ name: '🕹️ Discord', value: discord, inline: true });
-      fields.push({ name: '💰 Total', value: `R$ ${total.toLocaleString()}` });
+      fields.push({ name: '💰 Total', value: `R$ ${totalVenda.toLocaleString()}` });
       fields.push({ name: '📦 Tipo de Preço', value: tipoPreco.toUpperCase() });
-
       const embed = {
         title: '📦 NOVA ENCOMENDA – TROPA DO JAPÃO',
-        color: 0xff4500,
         thumbnail: {
           url: 'https://i.ibb.co/215KsHzd/a-1f4f6d293574384b5442fe75cd5cdd6e.gif'
         },
+        color: 0xff4500,
         fields: fields,
         footer: {
           text: `Solicitante: ${nome}`
         },
         timestamp: new Date()
       };
-
       const webhookUrl = "https://discord.com/api/webhooks/1358967231106519182/64TTt6w72aus20JHEAyq6MeNYq5D5jThuMvV6VxqmtLhBmqVUQUEj-ilZmlgGkfpr7K5";
-
       fetch(webhookUrl, {
         method: "POST",
         headers: {
@@ -272,11 +331,11 @@
         if (res.ok) {
           bloquearBotao();
         } else {
-          alert("❌ Erro ao enviar ao Discord.");
+          alert("❌ Erro ao enviar encomenda.");
         }
       })
       .catch(err => {
-        alert("❌ Erro de conexão: " + err.message);
+        alert("❌ Falha ao conectar com o Discord: " + err.message);
       });
     }
   </script>
