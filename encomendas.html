@@ -352,7 +352,7 @@ function calcularPorcentagem() {
   const pct = parseFloat(document.getElementById('porcentagem').value);
   const out = document.getElementById('resultadoPorcentagem');
   if (!isNaN(val) && !isNaN(pct)) {
-    out.textContent = `Resultado: R$ ${((val * pct) / 100).toFixed(2)}`;
+    out.textContent = `Resultado: R$ ${(val - ((val * pct) / 100)).toFixed(2)}`;
   } else out.textContent = '';
 }
 
