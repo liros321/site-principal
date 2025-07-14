@@ -5,21 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recrutamento - Tropa do Japão</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.ibb.co/SwPRnbXN/Chat-GPT-Image-26-de-jun-de-2025-12-49-10.png') no-repeat center center fixed;
       background-size: cover;
       color: #e0e0e0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       min-height: 100vh;
+      padding-top: 60px;
     }
     body::before {
       content: "";
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -28,67 +33,74 @@
       z-index: -1;
     }
     header {
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 30px 20px;
       text-align: center;
       width: 100%;
+      box-shadow: 0 4px 12px rgba(255, 69, 0, 0.5);
     }
     header h1 {
       margin: 0;
-      font-size: 2.5em;
+      font-size: 3em;
       color: #ff4500;
+      text-shadow: 0 0 15px #ff4500;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500;
+      }
+      to {
+        text-shadow: 0 0 20px #ff8c00, 0 0 30px #ff8c00;
+      }
     }
     main {
-      padding: 30px 20px;
-      max-width: 600px;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
       width: 100%;
+      max-width: 700px;
+      animation: fadeIn 1s ease forwards;
     }
     .form-section {
       background: rgba(0, 0, 0, 0.85);
-      border-radius: 8px;
-      padding: 25px;
-      box-sizing: border-box;
-      text-align: center;
-    }
-    h2 {
-      color: #ff4500;
-      text-align: center;
-      margin-top: 0;
+      border-radius: 12px;
+      padding: 30px;
+      width: 100%;
+      box-shadow: 0 0 10px #ff4500;
     }
     label {
       display: block;
       margin: 15px 0 5px;
-      font-size: 1.1em;
+      font-size: 1em;
       text-align: left;
     }
     input, textarea {
       width: 100%;
-      padding: 10px;
-      border-radius: 4px;
+      padding: 12px;
+      border-radius: 6px;
       border: 1px solid #555;
-      background: #222;
+      background: #1c1c1c;
       color: #fff;
       font-size: 1em;
-      box-sizing: border-box;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 80px;
+      margin-bottom: 10px;
     }
     .btn {
-      background-color: #ff4500;
+      background: linear-gradient(135deg, #ff4500, #ff8c00);
       border: none;
       color: #fff;
-      padding: 12px;
-      font-size: 1.1em;
-      border-radius: 5px;
+      padding: 14px;
+      font-size: 1.2em;
+      border-radius: 8px;
       cursor: pointer;
       width: 100%;
-      margin-top: 20px;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease-in-out;
     }
     .btn:hover {
-      background-color: #e03d00;
+      transform: scale(1.03);
+      box-shadow: 0 0 20px #ff8c00;
     }
     #confirmacao {
       margin-top: 20px;
@@ -97,40 +109,42 @@
       text-align: center;
     }
     footer {
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       text-align: center;
-      padding: 10px;
+      padding: 15px;
       color: #ccc;
       width: 100%;
       margin-top: auto;
+      box-shadow: 0 -4px 12px rgba(255, 69, 0, 0.3);
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Recrutamento - Tropa do Japão</h1>
+    <h1>📋 Recrutamento - Tropa do Japão</h1>
   </header>
   <main>
     <div class="form-section">
-      <h2>Formulário de Recrutamento</h2>
-      <label>Discord:</label>
-      <input type="text" id="discord" placeholder="Ex: japa123#4567">
-      <label>Nome:</label>
-      <input type="text" id="nome" placeholder="Ex: Japa Bala">
-      <label>RG:</label>
-      <input type="text" id="rg" placeholder="Somente números" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')">
-      <label>Telefone:</label>
-      <input type="text" id="telefone" placeholder="000-000" maxlength="7" oninput="mascaraTelefone(this)">
-      <label>Idade:</label>
-      <input type="text" id="idade" placeholder="Ex: 18" maxlength="3" oninput="this.value = this.value.replace(/\D/g, '')">
-      <label>Nível do Personagem na Cidade (0 a 100):</label>
-      <input type="text" id="nivel" maxlength="3" oninput="this.value = this.value.replace(/\D/g, '')">
-      <label>Tempo na Cidade:</label>
-      <input type="text" id="tempo" placeholder="Ex: 2 semanas">
-      <label>Data e Hora para Entrevista:</label>
-      <input type="text" id="entrevista" placeholder="00/00/0000 00:00" maxlength="16" oninput="mascaraDataHora(this)">
-      <button class="btn" id="botaoEnviar" onclick="enviarRecrutamento()">Enviar Recrutamento</button>
-      <div id="confirmacao"></div>
+      <form id="formRecrutamento">
+        <label>Discord:</label>
+        <input type="text" id="discord" required>
+        <label>Nome:</label>
+        <input type="text" id="nome" required>
+        <label>RG:</label>
+        <input type="text" id="rg" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')" required>
+        <label>Telefone:</label>
+        <input type="text" id="telefone" maxlength="7" oninput="mascaraTelefone(this)" required>
+        <label>Idade:</label>
+        <input type="number" id="idade" max="120" required>
+        <label>Nível do Personagem na Cidade (0 a 100):</label>
+        <input type="number" id="nivel" max="100" required>
+        <label>Tempo na Cidade:</label>
+        <input type="text" id="tempo" required>
+        <label>Data e Hora para Entrevista:</label>
+        <input type="text" id="entrevista" placeholder="00/00/0000 00:00" maxlength="16" oninput="mascaraDataHora(this)" required>
+        <button type="button" class="btn" onclick="enviarRecrutamento()" id="botaoEnviar">Enviar Recrutamento</button>
+        <div id="confirmacao"></div>
+      </form>
     </div>
   </main>
   <footer>
@@ -192,31 +206,37 @@
 
       const webhookUrl = "https://discord.com/api/webhooks/1390950614653210724/Ttbw5Wdex7inpKMtutO-BwgxmKyTxfyOO66as89nxWXFvKzOv-1zilF5GWAeBrbfQpjK";
 
-      const embed = {
-        embeds: [
-          {
-            title: "📋 NOVA INSCRIÇÃO DE RECRUTAMENTO",
-            thumbnail: {
-              url: "https://i.ibb.co/215KsHzd/a-1f4f6d293574384b5442fe75cd5cdd6e.gif"
-            },
-            color: 16729344,
-            fields: [
-              { name: "🕹️ Discord", value: discord, inline: false },
-              { name: "👤 Nome", value: nome, inline: true },
-              { name: "🪪 RG", value: rg, inline: true },
-              { name: "📱 Telefone", value: telefone, inline: true },
-              { name: "🎂 Idade", value: idade, inline: true },
-              { name: "🎖️ Nível do Personagem", value: `${nivel}/100`, inline: true },
-              { name: "⏳ Tempo na Cidade", value: tempo, inline: true },
-              { name: "🗓️ Data/Hora Entrevista", value: entrevista, inline: true }
-            ],
-            footer: {
-              text: `Solicitante: ${nome}`
-            }
-          }
-        ],
-        content: "<@&796350502588776478>"
-      };
+const embed = {
+  embeds: [
+    {
+      title: "📋 NOVA INSCRIÇÃO DE RECRUTAMENTO",
+      thumbnail: {
+        url: "https://i.ibb.co/215KsHzd/a-1f4f6d293574384b5442fe75cd5cdd6e.gif"
+      },
+      color: 16729344,
+      fields: [
+        { name: "👤 **DADOS DO CANDIDATO**", value: "\u200B" },
+        { name: "🕹️ Discord", value: discord, inline: true },
+        { name: "👤 Nome", value: nome, inline: true },
+        { name: "🪪 RG", value: rg, inline: true },
+        { name: "📱 Telefone", value: telefone, inline: true },
+        { name: "🎂 Idade", value: idade, inline: true },
+
+        { name: "\u200B", value: "\u200B" }, // espaço em branco
+
+        { name: "🌆 **INFORMAÇÕES DO RP**", value: "\u200B" },
+        { name: "🎖️ Nível do Personagem", value: `${nivel}/100`, inline: true },
+        { name: "⏳ Tempo na Cidade", value: tempo, inline: true },
+        { name: "🗓️ Data/Hora Entrevista", value: entrevista, inline: true }
+      ],
+      footer: {
+        text: `Solicitante: ${nome}`
+      }
+    }
+  ],
+  content: "<@&796350502588776478>"
+};
+
 
       const botao = document.getElementById("botaoEnviar");
       botao.disabled = true;
