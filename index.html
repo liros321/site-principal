@@ -3,279 +3,501 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tropa do Japão - Portais</title>
+  <title>Tropa do Japão - Os Melhores da Cidade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * {margin:0; padding:0; box-sizing:border-box;}
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://i.ibb.co/SwPRnbXN/Chat-GPT-Image-26-de-jun-de-2025-12-49-10.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #e0e0e0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding-top: 60px;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: -1;
-    }
-    header {
-      background-color: rgba(0, 0, 0, 0.85);
-      padding: 30px 20px;
-      text-align: center;
-      width: 100%;
-      box-shadow: 0 4px 12px rgba(255, 69, 0, 0.5);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 3em;
-      color: #ff4500;
-      text-shadow: 0 0 15px #ff4500;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500; }
-      to { text-shadow: 0 0 20px #ff8c00, 0 0 30px #ff8c00; }
-    }
-    main {
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      width: 100%;
-      max-width: 600px;
-      animation: fadeIn 1s ease forwards;
-    }
-    .btn-link {
-      background: linear-gradient(135deg, #ff4500, #ff8c00);
-      color: #fff;
-      padding: 20px 40px;
-      font-size: 1.5em;
-      border-radius: 12px;
-      text-decoration: none;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .btn-link:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #ff8c00, 0 0 30px #ff8c00;
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(-20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    footer {
-      background: rgba(0, 0, 0, 0.75);
-      text-align: center;
-      padding: 15px;
-      color: #ccc;
-      width: 100%;
-      margin-top: auto;
-      box-shadow: 0 -4px 12px rgba(255, 69, 0, 0.3);
+      font-family:'Orbitron',sans-serif;
+      background:#000;
+      color:#e0e0e0;
+      overflow:hidden;
+      height:100vh;
     }
 
-    /* Modal */
+    /* FUNDO */
+    .main-content {
+      position:relative;
+      width:100%;height:100%;
+      background:url('https://i.ibb.co/SwPRnbXN/Chat-GPT-Image-26-de-jun-de-2025-12-49-10.png') no-repeat center center fixed;
+      background-size:cover;
+    }
+    body::before {
+      content:"";
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.7);
+      z-index:1;
+      animation:pulse 5s infinite alternate ease-in-out;
+    }
+    @keyframes pulse {
+      0%{background:rgba(0,0,0,0.65);}
+      100%{background:rgba(0,0,0,0.85);}
+    }
+
+    #sparks, #explosions, #smoke, #light-beam {
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      pointer-events:none;z-index:0;
+    }
+    #light-beam {
+      background:linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+      animation:lightSweep 8s infinite;
+    }
+    @keyframes lightSweep {
+      0%{transform:translateX(-100%);}
+      50%{transform:translateX(100%);}
+      100%{transform:translateX(-100%);}
+    }
+
+    /* HEADER */
+    header {
+      background-color:rgba(0,0,0,0.85);
+      padding:30px 20px;
+      text-align:center;
+      width:100%;
+      box-shadow:0 4px 12px rgba(255,69,0,0.6);
+      position:relative;
+      z-index:2;
+    }
+    header h1 {
+      font-size:3em;
+      color:#ff4500;
+      text-shadow:0 0 20px #ff4500, 0 0 40px #ff6347;
+      animation:neonGlow 1.5s ease-in-out infinite alternate;
+      letter-spacing:2px;
+    }
+    @keyframes neonGlow {
+      0%{text-shadow:0 0 10px #ff4500,0 0 20px #ff4500;}
+      100%{text-shadow:0 0 20px #ff6347,0 0 40px #ff6347;}
+    }
+
+    main {
+      padding:40px 20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:30px;
+      width:100%;
+      max-width:600px;
+      margin:auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .btn-link {
+      background:linear-gradient(135deg,#ff4500,#ff6347);
+      color:#fff;
+      padding:20px 40px;
+      font-size:1.5em;
+      border-radius:12px;
+      text-decoration:none;
+      width:100%;max-width:400px;
+      text-align:center;
+      box-shadow:0 0 10px #ff4500,0 0 20px #ff4500;
+      transition:transform 0.3s, box-shadow 0.3s;
+      position:relative;
+      overflow:hidden;
+    }
+    .btn-link:hover {
+      transform:scale(1.05);
+      box-shadow:0 0 20px #ff6347,0 0 30px #ff6347;
+    }
+    .btn-link::before {
+      content:"";
+      position:absolute;top:0;left:-100%;
+      width:100%;height:100%;
+      background:rgba(255,255,255,0.2);
+      transform:skewX(-20deg);
+      transition:all 0.4s ease-in-out;
+    }
+    .btn-link:hover::before {left:100%;}
+
+    footer {
+      background:rgba(0,0,0,0.75);
+      text-align:center;
+      padding:15px;
+      color:#ccc;
+      width:100%;
+      position:absolute;
+      bottom:0;
+      z-index:2;
+      box-shadow:0 -4px 12px rgba(255,69,0,0.3);
+    }
+
+    /* PARTICULAS TOP1 */
+    #particles-top1 {
+      margin-top:15px;
+      width:100%;
+      max-width:500px;
+      height:120px;
+      z-index:2;
+    }
+
+    /* MODAL */
     .modal {
-      display: none;
-      position: fixed;
-      z-index: 99;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      justify-content: center;
-      align-items: center;
+      display:none;
+      position:fixed;
+      z-index:99;
+      top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.85);
+      justify-content:center;
+      align-items:center;
     }
     .modal-content {
-      background: #222;
-      padding: 25px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      color: #fff;
-      text-align: left;
+      background:#222;
+      padding:25px;border-radius:10px;
+      width:90%;max-width:500px;
+      color:#fff;text-align:left;
+      box-shadow:0 0 20px #ff4500;
+      animation:fadeIn 0.6s ease;
+    }
+    @keyframes fadeIn {
+      0%{opacity:0;transform:translateY(-20px);}
+      100%{opacity:1;transform:translateY(0);}
     }
     .modal-content h2 {
-      text-align: center;
-      color: #ff4500;
-      margin-bottom: 15px;
+      text-align:center;
+      color:#ff4500;
+      margin-bottom:15px;
     }
     .modal-content label {
-      margin-top: 10px;
-      display: block;
-      font-weight: bold;
+      margin-top:10px;display:block;font-weight:bold;
     }
     .modal-content input,
     .modal-content textarea {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      margin-top: 5px;
-      background: #111;
-      color: #fff;
-      box-sizing: border-box;
+      width:100%;padding:10px;
+      border:none;border-radius:5px;
+      margin-top:5px;background:#111;color:#fff;
     }
     .modal-buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
+      margin-top:20px;
+      display:flex;justify-content:space-between;gap:10px;
     }
     .modal-buttons button {
-      flex: 1;
-      padding: 10px;
-      font-size: 1em;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      flex:1;padding:10px;
+      font-size:1em;border:none;border-radius:5px;
+      cursor:pointer;
     }
-    .btn-cancelar {
-      background: #555;
-      color: #fff;
-    }
-    .btn-enviar {
-      background: #ff4500;
-      color: #fff;
-    }
-    .btn-cancelar:hover {
-      background: #444;
-    }
-    .btn-enviar:hover {
-      background: #e03d00;
+    .btn-cancelar {background:#555;color:#fff;}
+    .btn-enviar {background:#ff4500;color:#fff;}
+    .btn-cancelar:hover {background:#444;}
+    .btn-enviar:hover {background:#e03d00;}
+
+    #mensagemSucesso {
+      display:none;
+      color:#00ff99;
+      margin-top:15px;
+      text-align:center;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>⚔️ Tropa do Japão</h1>
-  </header>
-  <main>
-    <a href="encomendas.html" class="btn-link">🔫 ENCOMENDAS</a>
-    <a href="recrutamento.html" class="btn-link">📝 RECRUTAMENTO</a>
-    <a href="https://www.instagram.com/japaoncrp/" class="btn-link" target="_blank">📷 INSTAGRAM</a>
-    <a href="#" onclick="abrirModal()" class="btn-link">🚨 DENUNCIAR</a>
-  </main>
-  <footer>
-    <p>&copy; 2025 Tropa do Japão – Todos os direitos reservados</p>
-  </footer>
+  <div class="main-content">
+    <canvas id="sparks"></canvas>
+    <canvas id="explosions"></canvas>
+    <canvas id="smoke"></canvas>
+    <div id="light-beam"></div>
 
-  <!-- MODAL -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <h2>Denúncia Interna</h2>
-      <label>Meu ID:</label>
-      <input type="text" id="meuId" maxlength="10" oninput="this.value = this.value.replace(/\D/g, '')">
-      <label>Meu Discord:</label>
-      <input type="text" id="meuDiscord">
-      <label>ID do membro:</label>
-      <input type="text" id="denunciaId" maxlength="10" oninput="this.value = this.value.replace(/\D/g, '')">
-      <label>Motivo:</label>
-      <textarea id="denunciaMotivo" rows="3" placeholder="Descreva brevemente o que aconteceu..."></textarea>
-      <label>Prova (link ou descrição):</label>
-      <textarea id="denunciaProva" rows="3" placeholder="Ex: link do clipe ou print"></textarea>
-      <div id="mensagemSucesso" style="display: none; color: #00ff99; margin-top: 15px; text-align: center;">
-        ✅ Sua denúncia foi enviada com sucesso!
-      </div>
-      <div class="modal-buttons">
-        <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
-        <button class="btn-enviar" id="btnEnviarDenuncia" onclick="enviarDenuncia()">Enviar</button>
+    <header>
+      <h1> TROPA DO JAPÃO</h1>
+    </header>
+    <main>
+      <a href="encomendas.html" class="btn-link">🔫 ENCOMENDAS</a>
+      <a href="recrutamento.html" class="btn-link">📝 RECRUTAMENTO</a>
+      <a href="https://www.instagram.com/japaoncrp/" class="btn-link" target="_blank">📷 INSTAGRAM</a>
+      <a href="#" onclick="abrirModal()" class="btn-link">🚨 DENUNCIAR</a>
+
+      <!-- NOVO CANVAS TOP 1 -->
+      <canvas id="particles-top1"></canvas>
+    </main>
+    <footer>
+      <p>&copy; 2025 Tropa do Japão – Dominando a Cidade</p>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h2>Denúncia Interna</h2>
+        <label>Meu ID:</label>
+        <input type="text" id="meuId" maxlength="10" oninput="this.value = this.value.replace(/\D/g, '')">
+        <label>Meu Discord:</label>
+        <input type="text" id="meuDiscord">
+        <label>ID do membro:</label>
+        <input type="text" id="denunciaId" maxlength="10" oninput="this.value = this.value.replace(/\D/g, '')">
+        <label>Motivo:</label>
+        <textarea id="denunciaMotivo" rows="3" placeholder="Descreva brevemente o que aconteceu..."></textarea>
+        <label>Prova (link ou descrição):</label>
+        <textarea id="denunciaProva" rows="3" placeholder="Ex: link do clipe ou print"></textarea>
+        <div id="mensagemSucesso">✅ Sua denúncia foi enviada com sucesso!</div>
+        <div class="modal-buttons">
+          <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+          <button class="btn-enviar" id="btnEnviarDenuncia" onclick="enviarDenuncia()">Enviar</button>
+        </div>
       </div>
     </div>
-  </div>
+<script>
+  // --- MODAL DENÚNCIA ---
+  function abrirModal() {
+    document.getElementById("modal").style.display = "flex";
+  }
+  function fecharModal() {
+    document.getElementById("modal").style.display = "none";
+    document.getElementById("mensagemSucesso").style.display = "none";
+    document.getElementById("btnEnviarDenuncia").disabled = false;
+    document.getElementById("btnEnviarDenuncia").innerText = "Enviar";
+  }
+  function enviarDenuncia() {
+    const meuId = document.getElementById("meuId").value.trim();
+    const meuDiscord = document.getElementById("meuDiscord").value.trim();
+    const id = document.getElementById("denunciaId").value.trim();
+    const motivo = document.getElementById("denunciaMotivo").value.trim();
+    const prova = document.getElementById("denunciaProva").value.trim();
 
-  <script>
-    function abrirModal() {
-      document.getElementById("modal").style.display = "flex";
+    if (!meuId || !meuDiscord || !id || !motivo || !prova) {
+      alert("⚠️ Preencha todos os campos.");
+      return;
     }
 
-    function fecharModal() {
-      document.getElementById("modal").style.display = "none";
-      document.getElementById("mensagemSucesso").style.display = "none";
-      document.getElementById("btnEnviarDenuncia").disabled = false;
-      document.getElementById("btnEnviarDenuncia").innerText = "Enviar";
-    }
-
-    function enviarDenuncia() {
-      const meuId = document.getElementById("meuId").value.trim();
-      const meuDiscord = document.getElementById("meuDiscord").value.trim();
-      const id = document.getElementById("denunciaId").value.trim();
-      const motivo = document.getElementById("denunciaMotivo").value.trim();
-      const prova = document.getElementById("denunciaProva").value.trim();
-
-      if (!meuId || !meuDiscord || !id || !motivo || !prova) {
-        alert("⚠️ Preencha todos os campos.");
-        return;
-      }
-
-      const embed = {
-        embeds: [
-          {
-            title: "🚨 NOVA DENÚNCIA INTERNA",
-            color: 16734296,
-            fields: [
-              { name: "👤 Denunciante", value: `🆔 **ID:** ${meuId}\n🎮 **Discord:** ${meuDiscord}` },
-              { name: "👤 Denunciado", value: `🆔 **ID:** ${id}\n📄 **Motivo:** ${motivo}\n📎 **Prova:** ${prova}` }
-            ],
-            footer: {
-              text: `Solicitado por ${meuDiscord}`
-            },
-            timestamp: new Date().toISOString()
-          }
+    const embed = {
+      embeds: [{
+        title: "🚨 NOVA DENÚNCIA INTERNA",
+        color: 16734296,
+        fields: [
+          { name: "👤 Denunciante", value: `🆔 **ID:** ${meuId}\n🎮 **Discord:** ${meuDiscord}` },
+          { name: "👤 Denunciado", value: `🆔 **ID:** ${id}\n📄 **Motivo:** ${motivo}\n📎 **Prova:** ${prova}` }
         ],
-        content: "<@&796350501167300669>"
-      };
+        footer: { text: `Solicitado por ${meuDiscord}` },
+        timestamp: new Date().toISOString()
+      }],
+      content: "<@&796350501167300669>"
+    };
 
-      const botao = document.getElementById("btnEnviarDenuncia");
-      botao.disabled = true;
-      botao.innerText = "Enviando...";
+    const botao = document.getElementById("btnEnviarDenuncia");
+    botao.disabled = true;
+    botao.innerText = "Enviando...";
 
-      fetch("https://discord.com/api/webhooks/1389649360337502263/KX02bU-9uvvKf-PhCQvu9EQ_UiVGR5HmN1eYJeT0fmW8Dh3MHoDsn9KZGav43O-v12VK", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(embed)
-      })
-      .then(res => {
-        if (res.ok) {
-          document.getElementById("mensagemSucesso").style.display = "block";
-          document.getElementById("meuId").value = "";
-          document.getElementById("meuDiscord").value = "";
-          document.getElementById("denunciaId").value = "";
-          document.getElementById("denunciaMotivo").value = "";
-          document.getElementById("denunciaProva").value = "";
-
-          botao.innerText = "Denúncia Enviada!";
-          setTimeout(fecharModal, 3000);
-        } else {
-          alert("❌ Erro ao enviar denúncia.");
-          botao.disabled = false;
-          botao.innerText = "Enviar";
-        }
-      })
-      .catch(err => {
-        alert("❌ Erro de conexão: " + err.message);
+    fetch("https://discord.com/api/webhooks/1389649360337502263/KX02bU-9uvvKf-PhCQvu9EQ_UiVGR5HmN1eYJeT0fmW8Dh3MHoDsn9KZGav43O-v12VK", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(embed)
+    })
+    .then(res => {
+      if (res.ok) {
+        document.getElementById("mensagemSucesso").style.display = "block";
+        document.getElementById("meuId").value = "";
+        document.getElementById("meuDiscord").value = "";
+        document.getElementById("denunciaId").value = "";
+        document.getElementById("denunciaMotivo").value = "";
+        document.getElementById("denunciaProva").value = "";
+        botao.innerText = "Denúncia Enviada!";
+        setTimeout(fecharModal, 3000);
+      } else {
+        alert("❌ Erro ao enviar denúncia.");
         botao.disabled = false;
         botao.innerText = "Enviar";
-      });
+      }
+    })
+    .catch(err => {
+      alert("❌ Erro de conexão: " + err.message);
+      botao.disabled = false;
+      botao.innerText = "Enviar";
+    });
+  }
+
+  // --- SONS E EFEITOS CINEMÁTICOS ---
+  const explosionSound = new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_1c1e772a37.mp3?filename=explosion-124488.mp3");
+  const gunfireSound = new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_14b4312e04.mp3?filename=gunfire-124485.mp3");
+
+  document.addEventListener("DOMContentLoaded", () => {
+    iniciarEfeitos();
+    setInterval(() => gunfireSound.play(), 5000);
+    setInterval(() => explosionSound.play(), 7000);
+  });
+
+  function iniciarEfeitos() {
+    iniciarParticulasTop1();
+    iniciarFaíscas();
+    iniciarExplosoes();
+    iniciarFumaca();
+  }
+
+  // --- PARTICULAS "TOP 1 DA CIDADE" (ABAIXO DO BOTÃO) ---
+  function iniciarParticulasTop1() {
+    const canvas = document.getElementById("particles-top1");
+    const ctx = canvas.getContext("2d");
+    canvas.width = 500;
+    canvas.height = 120;
+    let particlesArray = [];
+
+    class Particle {
+      constructor(x, y) {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = 1.5;
+        this.baseX = x;
+        this.baseY = y;
+        this.density = Math.random() * 30 + 1;
+        this.explode = true;
+      }
+      draw() {
+        ctx.fillStyle = "#ff4500";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      update() {
+        if (this.explode) {
+          this.x += (Math.random() - 0.5) * 15;
+          this.y += (Math.random() - 0.5) * 15;
+          this.explode = false;
+        }
+        let dx = this.baseX - this.x;
+        let dy = this.baseY - this.y;
+        this.x += dx / this.density;
+        this.y += dy / this.density;
+      }
     }
-  </script>
+
+    function init() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.font = "bold 30px Orbitron";
+      ctx.fillText("TOP 1 DA CIDADE", 50, 70);
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      particlesArray = [];
+      for (let y = 0; y < canvas.height; y += 3) {
+        for (let x = 0; x < canvas.width; x += 3) {
+          if (data.data[(y * 4 * data.width) + (x * 4) + 3] > 128) {
+            particlesArray.push(new Particle(x, y));
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].draw();
+        particlesArray[i].update();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+  }
+
+  // --- FAÍSCAS ---
+  function iniciarFaíscas() {
+    const sparkCanvas = document.getElementById("sparks");
+    const sparkCtx = sparkCanvas.getContext("2d");
+    sparkCanvas.width = window.innerWidth;
+    sparkCanvas.height = window.innerHeight;
+    let sparks = [];
+
+    class Spark {
+      constructor() {
+        this.x = Math.random() * sparkCanvas.width;
+        this.y = Math.random() * -50;
+        this.size = Math.random() * 2 + 1;
+        this.speedY = Math.random() * 2 + 1;
+      }
+      update() {
+        this.y += this.speedY;
+        if (this.y > sparkCanvas.height) {
+          this.y = Math.random() * -50;
+          this.x = Math.random() * sparkCanvas.width;
+        }
+      }
+      draw() {
+        sparkCtx.fillStyle = "rgba(255,100,0,0.8)";
+        sparkCtx.beginPath();
+        sparkCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        sparkCtx.fill();
+      }
+    }
+
+    for (let i = 0; i < 100; i++) sparks.push(new Spark());
+
+    function animate() {
+      sparkCtx.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
+      for (let i = 0; i < sparks.length; i++) {
+        sparks[i].update();
+        sparks[i].draw();
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  }
+
+  // --- EXPLOSÕES ---
+  function iniciarExplosoes() {
+    const explosionCanvas = document.getElementById("explosions");
+    const explosionCtx = explosionCanvas.getContext("2d");
+    explosionCanvas.width = window.innerWidth;
+    explosionCanvas.height = window.innerHeight;
+
+    function drawExplosion() {
+      let x = Math.random() * explosionCanvas.width;
+      let y = Math.random() * explosionCanvas.height;
+      let radius = 30 + Math.random() * 30;
+      let gradient = explosionCtx.createRadialGradient(x, y, 0, x, y, radius);
+      gradient.addColorStop(0, "rgba(255,200,0,0.8)");
+      gradient.addColorStop(1, "rgba(255,0,0,0)");
+      explosionCtx.fillStyle = gradient;
+      explosionCtx.beginPath();
+      explosionCtx.arc(x, y, radius, 0, Math.PI * 2);
+      explosionCtx.fill();
+      setTimeout(() => {
+        explosionCtx.clearRect(0, 0, explosionCanvas.width, explosionCanvas.height);
+      }, 400);
+    }
+    setInterval(drawExplosion, 3500);
+  }
+
+  // --- FUMAÇA ---
+  function iniciarFumaca() {
+    const smokeCanvas = document.getElementById("smoke");
+    const smokeCtx = smokeCanvas.getContext("2d");
+    smokeCanvas.width = window.innerWidth;
+    smokeCanvas.height = window.innerHeight;
+    let smokes = [];
+
+    class Smoke {
+      constructor() {
+        this.x = Math.random() * smokeCanvas.width;
+        this.y = smokeCanvas.height + 20;
+        this.size = 20 + Math.random() * 30;
+        this.speedY = 0.5 + Math.random();
+        this.opacity = 0.4 + Math.random() * 0.3;
+      }
+      update() {
+        this.y -= this.speedY;
+        if (this.opacity > 0) this.opacity -= 0.001;
+        if (this.y < 0) {
+          this.y = smokeCanvas.height + 20;
+          this.opacity = 0.5;
+        }
+      }
+      draw() {
+        smokeCtx.fillStyle = `rgba(100,100,100,${this.opacity})`;
+        smokeCtx.beginPath();
+        smokeCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        smokeCtx.fill();
+      }
+    }
+
+    for (let i = 0; i < 40; i++) smokes.push(new Smoke());
+
+    function animate() {
+      smokeCtx.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
+      for (let i = 0; i < smokes.length; i++) {
+        smokes[i].update();
+        smokes[i].draw();
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  }
+</script>
 </body>
 </html>
