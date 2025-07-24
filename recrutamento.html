@@ -4,270 +4,283 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recrutamento - Tropa do Japão</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * {margin:0; padding:0; box-sizing:border-box;}
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://i.ibb.co/SwPRnbXN/Chat-GPT-Image-26-de-jun-de-2025-12-49-10.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #e0e0e0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding-top: 60px;
+      font-family:'Orbitron', sans-serif;
+      background:url('https://i.ibb.co/SwPRnbXN/Chat-GPT-Image-26-de-jun-de-2025-12-49-10.png') no-repeat center/cover fixed;
+      color:#e0e0e0; overflow-x:hidden;
     }
     body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: -1;
+      content:""; position:fixed; inset:0;
+      background:rgba(0,0,0,.7);
+      z-index:-1; animation:pulse 6s infinite alternate;
+    }
+    @keyframes pulse {
+      0%{background:rgba(0,0,0,.65);}
+      100%{background:rgba(0,0,0,.85);}
     }
     header {
-      background-color: rgba(0, 0, 0, 0.85);
-      padding: 30px 20px;
-      text-align: center;
-      width: 100%;
-      box-shadow: 0 4px 12px rgba(255, 69, 0, 0.5);
+      background:rgba(0,0,0,.8);
+      padding:25px; text-align:center;
+      font-size:2.5em; color:#ff4500;
+      text-shadow:0 0 10px #ff4500,0 0 25px #ff6347;
+      animation:neonGlow 1.5s ease-in-out infinite alternate;
+      box-shadow:0 4px 12px rgba(255,69,0,0.6);
     }
-    header h1 {
-      margin: 0;
-      font-size: 3em;
-      color: #ff4500;
-      text-shadow: 0 0 15px #ff4500;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500;
-      }
-      to {
-        text-shadow: 0 0 20px #ff8c00, 0 0 30px #ff8c00;
-      }
+    @keyframes neonGlow {
+      0%{text-shadow:0 0 10px #ff4500,0 0 20px #ff4500;}
+      100%{text-shadow:0 0 20px #ff6347,0 0 40px #ff6347;}
     }
     main {
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      width: 100%;
-      max-width: 700px;
-      animation: fadeIn 1s ease forwards;
+      max-width:800px; margin:auto; padding:30px 15px;
+      position:relative; z-index:2;
+    }
+    .login-discord {
+      background:linear-gradient(135deg,#7289da,#99aaff);
+      color:#fff; font-size:1.2em; font-weight:bold;
+      text-transform:uppercase;
+      padding:12px 25px; border:none; border-radius:8px;
+      margin-bottom:20px; cursor:pointer; display:block;
+      transition:all .3s ease;
+      box-shadow:0 0 12px rgba(114,137,218,0.5);
+    }
+    .login-discord:hover {
+      transform:scale(1.05);
+      box-shadow:0 0 20px rgba(114,137,218,0.8);
     }
     .form-section {
-      background: rgba(0, 0, 0, 0.85);
-      border-radius: 12px;
-      padding: 30px;
-      width: 100%;
-      box-shadow: 0 0 10px #ff4500;
+      background:rgba(0,0,0,.7);
+      padding:25px; border-radius:10px;
+      box-shadow:0 0 12px rgba(255,69,0,0.25);
+    }
+    h2, label {
+      text-shadow:0 0 5px #ff4500;
     }
     label {
-      display: block;
-      margin: 15px 0 5px;
-      font-size: 1em;
-      text-align: left;
+      display:block; margin:12px 0 4px;
+      font-size:1em;
     }
     input, textarea {
-      width: 100%;
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid #555;
-      background: #1c1c1c;
-      color: #fff;
-      font-size: 1em;
-      margin-bottom: 10px;
+      width:100%; padding:10px; border-radius:6px;
+      border:1px solid #555; background:#1c1c1c;
+      color:#fff; font-size:.95em;
     }
     .btn {
-      background: linear-gradient(135deg, #ff4500, #ff8c00);
-      border: none;
-      color: #fff;
-      padding: 14px;
-      font-size: 1.2em;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-      transition: all 0.3s ease-in-out;
+      background:#ff4500; border:none; color:#fff;
+      padding:12px; font-size:1.1em;
+      border-radius:6px; cursor:pointer;
+      transition:all .3s ease;
+      width:100%; margin-top:15px;
     }
     .btn:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 20px #ff8c00;
+      filter:brightness(1.2);
+    }
+    .btn.enviado {
+      background:#2ecc71 !important;
+      animation:checkPulse 1s infinite alternate;
+    }
+    @keyframes checkPulse {
+      0%{box-shadow:0 0 5px #2ecc71;}
+      100%{box-shadow:0 0 20px #2ecc71;}
     }
     #confirmacao {
-      margin-top: 20px;
-      font-size: 1.1em;
-      color: #00ff99;
-      text-align: center;
+      margin-top:15px; color:#00ff99;
+      text-align:center; font-size:1em;
     }
-    footer {
-      background: rgba(0, 0, 0, 0.75);
-      text-align: center;
-      padding: 15px;
-      color: #ccc;
-      width: 100%;
-      margin-top: auto;
-      box-shadow: 0 -4px 12px rgba(255, 69, 0, 0.3);
+
+    /* PARTICULAS */
+    canvas {
+      position:fixed; top:0; left:0;
+      width:100%; height:100%;
+      z-index:0; pointer-events:none;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>📋 Recrutamento - Tropa do Japão</h1>
-  </header>
+  <header>📋 Recrutamento - Tropa do Japão</header>
+  <canvas id="particles"></canvas>
   <main>
+    <button class="login-discord" id="loginDiscord">🔗 Autenticar com Discord</button>
     <div class="form-section">
-      <form id="formRecrutamento">
-        <label>Discord:</label>
-        <input type="text" id="discord" required>
-        <label>Nome:</label>
-        <input type="text" id="nome" required>
-        <label>RG:</label>
-        <input type="text" id="rg" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')" required>
-        <label>Telefone:</label>
-        <input type="text" id="telefone" maxlength="7" oninput="mascaraTelefone(this)" required>
-        <label>Idade:</label>
-        <input type="number" id="idade" max="120" required>
-        <label>Nível do Personagem na Cidade (0 a 100):</label>
-        <input type="number" id="nivel" max="100" required>
-        <label>Tempo na Cidade:</label>
-        <input type="text" id="tempo" required>
-        <label>Data e Hora para Entrevista:</label>
-        <input type="text" id="entrevista" placeholder="00/00/0000 00:00" maxlength="16" oninput="mascaraDataHora(this)" required>
-        <button type="button" class="btn" onclick="enviarRecrutamento()" id="botaoEnviar">Enviar Recrutamento</button>
-        <div id="confirmacao"></div>
-      </form>
+      <h2>Formulário de Recrutamento</h2>
+      <label>Discord:</label>
+      <input type="text" id="discord" disabled>
+      <label>Nome:</label>
+      <input type="text" id="nome">
+      <label>RG:</label>
+      <input type="text" id="rg" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')">
+      <label>Telefone:</label>
+      <input type="text" id="telefone" maxlength="7" oninput="mascaraTelefone(this)">
+      <label>Idade:</label>
+      <input type="number" id="idade" max="120">
+      <label>Nível do Personagem na Cidade (0 a 100):</label>
+      <input type="number" id="nivel" max="100">
+      <label>Tempo na Cidade:</label>
+      <input type="text" id="tempo">
+      <label>Data e Hora para Entrevista:</label>
+      <input type="text" id="entrevista" placeholder="00/00/0000 00:00" maxlength="16" oninput="mascaraDataHora(this)">
+      <button class="btn" onclick="enviarRecrutamento()" id="botaoEnviar" disabled>Enviar Recrutamento</button>
+      <div id="confirmacao"></div>
     </div>
-  </main>
-  <footer>
-    <p>&copy; 2025 Tropa do Japão – Todos os direitos reservados</p>
-  </footer>
-  <script>
-    function mascaraTelefone(input) {
-      let valor = input.value.replace(/\D/g, '').substring(0, 6);
-      if (valor.length >= 4) {
-        input.value = valor.substring(0, 3) + '-' + valor.substring(3);
-      } else {
-        input.value = valor;
-      }
+<script>
+  // ========================
+  // AUTENTICAÇÃO VIA DISCORD
+  // ========================
+  let usuarioAutenticado = false;
+  document.getElementById("loginDiscord").addEventListener("click", () => {
+    const clientId = "1397994257612275832"; // ✅ Seu CLIENT ID
+    const redirectUri = encodeURIComponent(window.location.href);
+    const scope = "identify";
+    const responseType = "token";
+    const url = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+    window.location.href = url;
+  });
+
+  const fragment = new URLSearchParams(window.location.hash.slice(1));
+  const token = fragment.get("access_token");
+
+  if (token) {
+    fetch("https://discord.com/api/users/@me", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(user => {
+      document.getElementById("discord").value = `${user.username}#${user.discriminator}`;
+      usuarioAutenticado = true;
+      const btnLogin = document.getElementById("loginDiscord");
+      btnLogin.textContent = `✅ Autenticado como ${user.username}#${user.discriminator}`;
+      btnLogin.disabled = true;
+      btnLogin.style.background = "#2ecc71";
+      document.getElementById("botaoEnviar").disabled = false;
+      alert(`Bem-vindo, ${user.username}! Complete o formulário e envie o recrutamento.`);
+    })
+    .catch(() => alert("Erro ao autenticar com o Discord."));
+  }
+
+  // ========================
+  // MÁSCARAS
+  // ========================
+  function mascaraTelefone(input) {
+    let valor = input.value.replace(/\D/g, '').substring(0, 6);
+    input.value = valor.length >= 4 ? valor.substring(0,3)+"-"+valor.substring(3) : valor;
+  }
+  function mascaraDataHora(input) {
+    let v = input.value.replace(/\D/g, '').substring(0,12), f='';
+    if(v.length>0) f+=v.substring(0,2);
+    if(v.length>2) f+='/'+v.substring(2,4);
+    if(v.length>4) f+='/'+v.substring(4,8);
+    if(v.length>8) f+=' '+v.substring(8,10);
+    if(v.length>10) f+=':'+v.substring(10,12);
+    input.value=f;
+  }
+
+  // ========================
+  // ENVIAR RECRUTAMENTO
+  // ========================
+  function enviarRecrutamento() {
+    if(!usuarioAutenticado){
+      alert("Você precisa autenticar com o Discord antes de enviar.");
+      return;
     }
 
-    function mascaraDataHora(input) {
-      let valor = input.value.replace(/\D/g, '');
-      if (valor.length > 12) valor = valor.substring(0, 12);
-      let formatado = '';
-      if (valor.length > 0) formatado += valor.substring(0, 2);
-      if (valor.length > 2) formatado += '/' + valor.substring(2, 4);
-      if (valor.length > 4) formatado += '/' + valor.substring(4, 8);
-      if (valor.length > 8) formatado += ' ' + valor.substring(8, 10);
-      if (valor.length > 10) formatado += ':' + valor.substring(10, 12);
-      input.value = formatado;
+    const discord = document.getElementById("discord").value.trim();
+    const nome = document.getElementById("nome").value.trim();
+    const rg = document.getElementById("rg").value.trim();
+    const telefone = document.getElementById("telefone").value.trim();
+    const idade = document.getElementById("idade").value.trim();
+    const nivel = document.getElementById("nivel").value.trim();
+    const tempo = document.getElementById("tempo").value.trim();
+    const entrevista = document.getElementById("entrevista").value.trim();
+
+    if(!discord || !nome || !rg || !telefone || !idade || !nivel || !tempo || !entrevista){
+      alert("⚠️ Preencha todos os campos.");
+      return;
     }
 
-    function enviarRecrutamento() {
-      const discord = document.getElementById("discord").value.trim();
-      const nome = document.getElementById("nome").value.trim();
-      const rg = document.getElementById("rg").value.trim();
-      const telefone = document.getElementById("telefone").value.trim();
-      const idade = document.getElementById("idade").value.trim();
-      const nivel = document.getElementById("nivel").value.trim();
-      const tempo = document.getElementById("tempo").value.trim();
-      const entrevista = document.getElementById("entrevista").value.trim();
+    const dataRegex = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/;
+    const match = entrevista.match(dataRegex);
+    if(!match){ alert("⚠️ Data e hora inválidas."); return; }
 
-      if (!discord || !nome || !rg || !telefone || !idade || !nivel || !tempo || !entrevista) {
-        alert("⚠️ Preencha todos os campos.");
-        return;
-      }
-
-      const dataRegex = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/;
-      const match = entrevista.match(dataRegex);
-      if (!match) {
-        alert("⚠️ Data e hora inválidas. Use o formato: DD/MM/AAAA HH:MM");
-        return;
-      }
-
-      const [_, dia, mes, ano, hora, minuto] = match;
-      const dataEntrevista = new Date(`${ano}-${mes}-${dia}T${hora}:${minuto}:00`);
-      const agora = new Date();
-      const minAdiantamento = new Date(agora.getTime() + 30 * 60000);
-
-      if (dataEntrevista <= minAdiantamento) {
-        alert("⚠️ A data da entrevista deve ser pelo menos 30 minutos à frente do horário atual.");
-        return;
-      }
-
-      const webhookUrl = "https://discord.com/api/webhooks/1397998166942679051/L_6cwGTokhGjC0wxMjyPJL93KKe3VO1xeZkG-dPYygy0rNwzB304WVDIeljHjF16QR0h";
-
-const embed = {
-  embeds: [
-    {
-      title: "📋 NOVA INSCRIÇÃO DE RECRUTAMENTO",
-      thumbnail: {
-        url: "https://i.ibb.co/215KsHzd/a-1f4f6d293574384b5442fe75cd5cdd6e.gif"
-      },
-      color: 16729344,
-      fields: [
-        { name: "👤 **DADOS DO CANDIDATO**", value: "\u200B" },
-        { name: "🕹️ Discord", value: discord, inline: true },
-        { name: "👤 Nome", value: nome, inline: true },
-        { name: "🪪 RG", value: rg, inline: true },
-        { name: "📱 Telefone", value: telefone, inline: true },
-        { name: "🎂 Idade", value: idade, inline: true },
-
-        { name: "\u200B", value: "\u200B" }, // espaço em branco
-
-        { name: "🌆 **INFORMAÇÕES DO RP**", value: "\u200B" },
-        { name: "🎖️ Nível do Personagem", value: `${nivel}/100`, inline: true },
-        { name: "⏳ Tempo na Cidade", value: tempo, inline: true },
-        { name: "🗓️ Data/Hora Entrevista", value: entrevista, inline: true }
-      ],
-      footer: {
-        text: `Solicitante: ${nome}`
-      }
+    const [_, dia, mes, ano, hora, minuto] = match;
+    const dataEntrevista = new Date(`${ano}-${mes}-${dia}T${hora}:${minuto}:00`);
+    const minAdiantamento = new Date(new Date().getTime() + 30 * 60000);
+    if(dataEntrevista <= minAdiantamento){
+      alert("⚠️ A entrevista deve ser marcada com pelo menos 30 minutos de antecedência.");
+      return;
     }
-  ],
-  content: "<@&796350502588776478>"
-};
 
+    const embed = {
+      embeds: [{
+        title:"📋 NOVA INSCRIÇÃO DE RECRUTAMENTO",
+        thumbnail:{ url:"https://i.ibb.co/215KsHzd/a-1f4f6d293574384b5442fe75cd5cdd6e.gif" },
+        color:16729344,
+        fields:[
+          {name:"👤 Nome", value:nome, inline:true},
+          {name:"🪪 RG", value:rg, inline:true},
+          {name:"📞 Telefone", value:telefone, inline:true},
+          {name:"🎂 Idade", value:idade, inline:true},
+          {name:"💬 Discord", value:discord, inline:true},
+          {name:"🎖️ Nível", value:`${nivel}/100`, inline:true},
+          {name:"⏳ Tempo na Cidade", value:tempo, inline:true},
+          {name:"🗓️ Entrevista", value:entrevista, inline:true}
+        ],
+        footer:{
+          text:`Tropa do Japão • Sistema de Recrutamento`,
+          icon_url:"https://i.ibb.co/215KsHzd/a-1f4f6d293574384b5442fe75cd5cdd6e.gif"
+        },
+        timestamp:new Date().toISOString()
+      }],
+      content:"<@&796350502588776478>"
+    };
 
-      const botao = document.getElementById("botaoEnviar");
-      botao.disabled = true;
-      botao.innerText = "✅ SOLICITAÇÃO ENVIADA";
+    const botao = document.getElementById("botaoEnviar");
+    botao.disabled = true;
+    botao.textContent = "Enviando...";
+    fetch("https://discord.com/api/webhooks/1397998166942679051/L_6cwGTokhGjC0wxMjyPJL93KKe3VO1xeZkG-dPYygy0rNwzB304WVDIeljHjF16QR0h", {
+      method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(embed)
+    }).then(res=>{
+      if(res.ok){
+        botao.classList.add("enviado");
+        botao.textContent="✅ Recrutamento Enviado";
+        document.getElementById("confirmacao").textContent="✅ Enviado com sucesso! Aguardem nosso contato.";
+      }else{alert("Erro ao enviar."); botao.disabled=false; botao.textContent="Enviar Recrutamento";}
+    }).catch(()=>alert("Erro de conexão."));
+  }
 
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(embed)
-      })
-      .then(res => {
-        if (res.ok) {
-          document.getElementById("confirmacao").innerHTML =
-            "✅ Recrutamento enviado com sucesso! Em breve entraremos em contato via Discord ou Telefone.";
-
-          setTimeout(() => {
-            botao.disabled = false;
-            botao.innerText = "Enviar Recrutamento";
-          }, 300000);
-        } else {
-          alert("❌ Erro ao enviar recrutamento.");
-          botao.disabled = false;
-          botao.innerText = "Enviar Recrutamento";
+  // ========================
+  // PARTICULAS – TOP 1 DA CIDADE
+  // ========================
+  const canvas=document.getElementById("particles"),ctx=canvas.getContext("2d");
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  let particlesArray=[];
+  class Particle{
+    constructor(x,y){this.x=x;this.y=y;this.size=1.5;this.baseX=x;this.baseY=y;this.density=Math.random()*30+1;}
+    draw(){ctx.fillStyle='#ff4500';ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();}
+    update(){let dx=this.baseX-this.x,dy=this.baseY-this.y;this.x+=dx/this.density;this.y+=dy/this.density;}
+  }
+  function initParticles(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.font="bold 60px Orbitron"; ctx.fillStyle="#fff";
+    ctx.fillText("TOP 1 DA CIDADE",canvas.width/4.5,canvas.height/1.1);
+    const data=ctx.getImageData(0,0,canvas.width,canvas.height);
+    particlesArray=[];
+    for(let y=0;y<canvas.height;y+=4){
+      for(let x=0;x<canvas.width;x+=4){
+        if(data.data[(y*4*data.width)+(x*4)+3]>128){
+          particlesArray.push(new Particle(x,y));
         }
-      })
-      .catch(err => {
-        alert("❌ Erro de conexão com o Discord: " + err.message);
-        botao.disabled = false;
-        botao.innerText = "Enviar Recrutamento";
-      });
+      }
     }
-  </script>
+  }
+  function animateParticles(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let i=0;i<particlesArray.length;i++){particlesArray[i].draw();particlesArray[i].update();}
+    requestAnimationFrame(animateParticles);
+  }
+  initParticles(); animateParticles();
+  window.addEventListener("resize",()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;initParticles();});
+</script>
 </body>
 </html>
